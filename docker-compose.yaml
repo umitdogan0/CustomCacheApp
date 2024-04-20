@@ -1,0 +1,7 @@
+services:
+  cache:
+    ports:
+      - "7000:7000"
+    build:
+      context: .
+      dockerfile: dockerFile

@@ -1,8 +1,8 @@
 package configuration
 
 import (
-	"custom_cache_app/entities"
 	"errors"
+	"github.com/umitdogan0/CustomCacheApp/entities"
 	"gopkg.in/yaml.v3"
 	"os"
 )

@@ -1,10 +1,10 @@
 package main
 
 import (
-	"custom_cache_app/configuration"
-	"custom_cache_app/controllers"
-	"custom_cache_app/cron_jobs"
 	"github.com/gin-gonic/gin"
+	"github.com/umitdogan0/CustomCacheApp/configuration"
+	"github.com/umitdogan0/CustomCacheApp/controllers"
+	"github.com/umitdogan0/CustomCacheApp/cron_jobs"
 )
 
 func main() {

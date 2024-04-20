@@ -1,10 +1,10 @@
 package services
 
 import (
-	"custom_cache_app/configuration"
-	"custom_cache_app/entities"
 	"errors"
 	"fmt"
+	"github.com/umitdogan0/CustomCacheApp/configuration"
+	"github.com/umitdogan0/CustomCacheApp/entities"
 	"time"
 	"unsafe"
 )

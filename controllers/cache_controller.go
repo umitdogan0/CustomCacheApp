@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"custom_cache_app/entities"
-	"custom_cache_app/services"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/umitdogan0/CustomCacheApp/entities"
+	"github.com/umitdogan0/CustomCacheApp/services"
 	"net/http"
 	"time"
 )

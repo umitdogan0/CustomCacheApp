@@ -1,7 +1,7 @@
 package cron_jobs
 
 import (
-	"custom_cache_app/services"
+	"github.com/umitdogan0/CustomCacheApp/services"
 	"time"
 )
 

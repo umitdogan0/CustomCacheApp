@@ -1,8 +1,8 @@
 package services
 
 import (
-	"custom_cache_app/configuration"
 	"fmt"
+	"github.com/umitdogan0/CustomCacheApp/configuration"
 )
 
 func CheckMemoryUsage() bool {
