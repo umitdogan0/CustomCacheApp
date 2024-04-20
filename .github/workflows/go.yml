@@ -23,15 +23,9 @@ jobs:
         go-version: '1.22'
 
     - name: Build
-      run: go build -v ./...
+      run: go build -v -o CustomCacheApp ./...
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Archive build artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: CustomCacheApp
-        path: ./CustomCacheApp
         
     - name: Create Release
       id: create_release
