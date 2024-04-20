@@ -26,7 +26,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: CustomCache
-        path: ./app
+        path: ./CustomCache
 
   release:
     name: Create Release
@@ -39,7 +39,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: CustomCache
-        path: ./app
+        path: ./CustomCache
 
     - name: Create Release
       id: create_release
@@ -61,6 +61,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./app/CustomCache
+        asset_path: ./CustomCache/CustomCache
         asset_name: CustomCache
         asset_content_type: application/octet-stream
