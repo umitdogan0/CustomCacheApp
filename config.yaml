@@ -1,6 +1,6 @@
 server:
-    maximum_memory: 1024
+    maximum_memory: 1
     port : 7000
-    automatic_cleaning : false
+    automatic_cleaning : true
     min_automatic_cleaning_priority : 1
     max_automatic_cleaning_priority : 10

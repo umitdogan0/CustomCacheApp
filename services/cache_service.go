@@ -11,12 +11,17 @@ import (
 
 var caches *[]entities.CacheEntity = &[]entities.CacheEntity{}
 
-func MakeCache(entity *entities.CacheEntity) error {
+func MakeCache(entity *entities.CacheEntity, key string) error {
 
 	GetCollectionAlloc()
 	checked := CheckMemoryUsage()
+	if a := checkSameKey(key); a > -1 {
+		(*caches)[a] = *entity
+		return nil
+	}
 	fmt.Println(checked)
 	if checked {
+
 		*caches = append(*caches, *entity)
 		return nil
 	}
@@ -37,7 +42,7 @@ func cleanCache() error {
 	success := false
 	var config = configuration.GetConfiguration().Server
 	for i, cache := range *caches {
-		if cache.Priority > config.MinAutomaticCleaningPriority && cache.Priority < config.MaxAutomaticCleaningPriority {
+		if cache.Priority >= config.MinAutomaticCleaningPriority && cache.Priority <= config.MaxAutomaticCleaningPriority {
 			*caches = append((*caches)[:i], (*caches)[i+1:]...)
 			if CheckMemoryUsage() == true {
 				success = true
@@ -49,6 +54,15 @@ func cleanCache() error {
 		return errors.New("Not enough memory")
 	}
 	return nil
+}
+
+func checkSameKey(key string) int {
+	for i, cache := range *caches {
+		if _, ok := cache.Data[key]; ok {
+			return i
+		}
+	}
+	return -1
 }
 
 func CheckExpirationDate() {

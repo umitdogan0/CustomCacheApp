@@ -21,6 +21,11 @@ func RouteCacheController(server *gin.Engine) {
 		c.JSON(http.StatusOK, data)
 	})
 
+	server.GET("cache/ram", func(c *gin.Context) {
+		data := services.GetCollectionAlloc()
+		c.JSON(http.StatusOK, data)
+	})
+
 	server.GET("cache/get", func(c *gin.Context) {
 		key := c.Query("key")
 		data, err := services.GetCache(key)
@@ -47,7 +52,7 @@ func RouteCacheController(server *gin.Engine) {
 				Expiration: dynamicData.Expiration,
 				Priority:   dynamicData.Priority,
 				CreateDate: time.Now(),
-			})
+			}, key)
 			if err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 				return
