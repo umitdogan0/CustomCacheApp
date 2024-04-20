@@ -20,22 +20,22 @@ jobs:
         go-version: '1.22' # Projenizde kullandığınız Go sürümüne göre ayarlayın
 
     - name: Build for Linux
-      run: GOOS=linux GOARCH=amd64 go build -o app-linux
+      run: GOOS=linux GOARCH=amd64 go build -o custom-cache-linux
 
     - name: Build for Windows
-      run: GOOS=windows GOARCH=amd64 go build -o app-windows.exe
+      run: GOOS=windows GOARCH=amd64 go build -o custom-cache-windows.exe
 
     - name: Build for macOS
-      run: GOOS=darwin GOARCH=amd64 go build -o app-macos
+      run: GOOS=darwin GOARCH=amd64 go build -o custom-cache-macos
 
     - name: Archive builds
       uses: actions/upload-artifact@v2
       with:
         name: builds
         path: |
-          app-linux
-          app-windows.exe
-          app-macos
+          custom-cache-linux
+          custom-cache-windows.exe
+          custom-cache-macos
 
   release:
     name: Create Release
@@ -69,8 +69,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./app-linux
-        asset_name: app-linux
+        asset_path: ./custom-cache-linux
+        asset_name: custom-cache-linux
         asset_content_type: application/octet-stream
 
     - name: Upload Windows Release Asset
@@ -80,8 +80,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./app-windows.exe
-        asset_name: app-windows.exe
+        asset_path: ./custom-cache-windows.exe
+        asset_name: custom-cache-windows.exe
         asset_content_type: application/octet-stream
 
     - name: Upload macOS Release Asset
@@ -91,6 +91,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./app-macos
-        asset_name: app-macos
+        asset_path: ./custom-cache-macos
+        asset_name: custom-cache-macos
         asset_content_type: application/octet-stream
