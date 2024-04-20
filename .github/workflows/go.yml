@@ -24,13 +24,13 @@ jobs:
 
     - name: Build
       id: build
-      run: go build -v .
+      run: go build ./...
 
     - name: Upload
       uses: actions/upload-artifact@v4
       with:
         name: CustomCacheApp
-        path: ./CustomCacheApp
+        path: ./
         
     - name: Checkout code
       uses: actions/checkout@v2
