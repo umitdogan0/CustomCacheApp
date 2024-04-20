@@ -31,7 +31,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: CustomCacheApp
-        path: ./
+        path: ./CustomCacheApp
         
     - name: Create Release
       id: create_release
@@ -54,6 +54,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./  # Path to the built binary
+        asset_path: ./CustomCacheApp  # Path to the built binary
         asset_name: CustomCacheApp  # Name of the asset in the release
         asset_content_type: application/octet-stream
