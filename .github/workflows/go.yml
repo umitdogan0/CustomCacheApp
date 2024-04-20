@@ -26,6 +26,12 @@ jobs:
       run: go build -v ./...
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Archive build artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: CustomCacheApp
+        path: ./
         
     - name: Create Release
       id: create_release
@@ -41,3 +47,13 @@ jobs:
           - Second Change
         draft: false
         prerelease: false
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./CustomCacheApp  # Path to the built binary
+        asset_name: CustomCacheApp  # Name of the asset in the release
+        asset_content_type: application/octet-stream
