@@ -13,7 +13,7 @@ COPY . ./
 
 # Run the web service on container startup.
 
-# This container exposes port 8080 to the outside world.
+# This container exposes port 7000 to the outside world.
 EXPOSE 7000
 
 # Build the binary.
