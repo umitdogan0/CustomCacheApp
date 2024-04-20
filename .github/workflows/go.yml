@@ -30,7 +30,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: CustomCacheApp
-        path: ./
+        path: ../CustomCacheApp
         
     - name: Checkout code
       uses: actions/checkout@v2
