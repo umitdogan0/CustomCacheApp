@@ -55,7 +55,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.build.outputs.upload_url }}
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./CustomCacheApp  # Path to the built binary
         asset_name: CustomCacheApp  # Name of the asset in the release
         asset_content_type: application/octet-stream
