@@ -1,61 +1,66 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-
-name: Go
+name: Build and Release
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-
-  linux_build:
-    permissions: write-all
+  build:
+    name: Build Go project
     runs-on: ubuntu-latest
+    
     steps:
-    - uses: actions/checkout@v3
-
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.22'
-
-    - name: Build
-      id: build
-      run: go build
-
-    - name: Upload
-      uses: actions/upload-artifact@v4
-      with:
-        name: CustomCacheApp
-        path: ./CustomCacheApp
-        
     - name: Checkout code
       uses: actions/checkout@v2
-        
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '1.16' # Buradaki sürümü projenizde kullandığınız Go sürümüne göre ayarlayın
+
+    - name: Build
+      run: go build -o app
+
+    - name: Archive build
+      uses: actions/upload-artifact@v2
+      with:
+        name: app
+        path: ./app
+
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Download build
+      uses: actions/download-artifact@v2
+      with:
+        name: app
+        path: ./app
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.run_number }}
+        tag_name: v${{ github.run_number }}
         release_name: Release ${{ github.run_number }}
         body: |
-          Changes in this Release
-          - First Change
-          - Second Change
+          Release ${{ github.run_number }}
         draft: false
         prerelease: false
 
     - name: Upload Release Asset
+      id: upload-release-asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ../CustomCacheApp.zip  # Path to the built binary
-        asset_name: CustomCacheApp.zip  # Name of the asset in the release
-        asset_content_type: application/zip
+        asset_path: ./app/app
+        asset_name: app
+        asset_content_type: application/octet-stream
